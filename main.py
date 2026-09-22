@@ -1,0 +1,81 @@
+# ==============================================================================
+# SISTEMA DE ORIENTACIÓN Y REGISTRO DE ATENCIONES - SOPORTE ACADÉMICO
+# ==============================================================================
+
+def mostrar_menu():
+    """Función sin retorno (Req. 4): Muestra el menú de opciones principales."""
+    print("\n" + "=" * 45)
+    print("   SISTEMA DE SOPORTE ACADÉMICO - MENÚ")
+    print("=" * 45)
+    print("1. Registrar nueva solicitud de atención")
+    print("0. Salir")
+    print("=" * 45)
+
+
+
+def mostrar_resumen(solicitud: dict):
+    """Función sin retorno (Req. 7): Formatea y muestra los datos de la solicitud."""
+    print("\n----------------------------------------")
+    print("       DATOS DE LA ATENCIÓN REGISTRADA   ")
+    print("----------------------------------------")
+    print(f"Código Estudiante : {solicitud['codigo']}")
+    print(f"Nombre Estudiante : {solicitud['nombre']}")
+    print(f"Tipo de Consulta  : {solicitud['tipo'].capitalize()}")
+    print(f"Descripción       : {solicitud['descripcion']}")
+    print("----------------------------------------")
+
+
+
+
+def registrar_solicitud() -> dict:
+    """Registra datos básicos, valida la entrada y retorna la solicitud formateada (Req. 1, 8, 9)."""
+    print("\n--- NUEVA SOLICITUD DE SOPORTE ---")
+
+    codigo = input("Ingrese código de estudiante (mín. 4 caracteres): ")
+
+    nombre = input("Ingrese nombre completo del estudiante: ")
+
+    tipo = input("Ingrese tipo de consulta: ")
+
+    descripcion = input("Ingrese breve descripción del problema: ")
+
+    # Construcción de estructura local
+    nueva_solicitud = {
+        "codigo": codigo.strip(),
+        "nombre": nombre.strip(),
+        "tipo": tipo.strip().lower(),
+        "descripcion": descripcion.strip()
+    }
+
+    mostrar_resumen(nueva_solicitud)
+    return nueva_solicitud
+
+
+def main():
+    """Programa principal para controlar la ejecución y registrar múltiples solicitudes (Req. 10)."""
+    solicitudes = []  # Lista local para guardar atenciones
+
+    while True:
+        mostrar_menu()
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion == "1":
+            solicitud = registrar_solicitud()
+            solicitudes.append(solicitud)
+            print(f"Registrado exitosamente. Total acumulado: {len(solicitudes)}")
+
+        elif opcion == "0":
+            if len(solicitudes) < 3:
+                print(f"\n Nota: Llevas {len(solicitudes)} registro(s). La guía requiere probar con al menos 3 solicitudes.")
+                confirmar = input("¿Deseas salir de todas formas? (s/n): ").lower()
+                if confirmar != 's':
+                    continue
+            print("\n¡Gracias por utilizar el sistema de Soporte Académico!")
+            break
+
+        else:
+            print("Opción inválida. Intente de nuevo.")
+
+
+if __name__ == "__main__":
+    main()
