@@ -2,6 +2,7 @@
 # SISTEMA DE ORIENTACIÓN Y REGISTRO DE ATENCIONES - SOPORTE ACADÉMICO
 # ==============================================================================
 
+# codigo de menu
 def mostrar_menu():
     """Función sin retorno (Req. 4): Muestra el menú de opciones principales."""
     print("\n" + "=" * 45)
@@ -12,7 +13,7 @@ def mostrar_menu():
     print("=" * 45)
 
 
-
+# codigo de resumen
 def mostrar_resumen(solicitud: dict):
     """Función sin retorno (Req. 7): Formatea y muestra los datos de la solicitud."""
     print("\n----------------------------------------")
@@ -24,6 +25,11 @@ def mostrar_resumen(solicitud: dict):
     print(f"Descripción       : {solicitud['descripcion']}")
     print("----------------------------------------")
 
+# funciones de validacion
+def validar_codigo(codigo: str, min_longitud: int = 4) -> bool:
+    """Función con retorno (Req. 2): Valida código no vacío y con longitud mínima."""
+    codigo_limpio = codigo.strip()
+    return len(codigo_limpio) >= min_longitud and codigo_limpio.isalnum()
 
 
 
@@ -31,7 +37,12 @@ def registrar_solicitud() -> dict:
     """Registra datos básicos, valida la entrada y retorna la solicitud formateada (Req. 1, 8, 9)."""
     print("\n--- NUEVA SOLICITUD DE SOPORTE ---")
 
-    codigo = input("Ingrese código de estudiante (mín. 4 caracteres): ")
+    # Validación de Código
+    while True:
+        codigo = input("Ingrese código de estudiante (mín. 4 caracteres): ")
+        if validar_codigo(codigo):
+            break
+        print("Error: El código debe ser alfanumérico y tener al menos 4 caracteres.")
 
     nombre = input("Ingrese nombre completo del estudiante: ")
 
