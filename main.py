@@ -13,7 +13,7 @@ def mostrar_menu():
     print("=" * 45)
 
 
-# codigo de resumen
+# funcion del codigo de resumen
 def mostrar_resumen(solicitud: dict):
     """Función sin retorno (Req. 7): Formatea y muestra los datos de la solicitud."""
     print("\n----------------------------------------")
