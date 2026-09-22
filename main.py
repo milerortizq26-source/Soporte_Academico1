@@ -9,6 +9,7 @@ def mostrar_menu():
     print("   SISTEMA DE SOPORTE ACADÉMICO - MENÚ")
     print("=" * 45)
     print("1. Registrar nueva solicitud de atención")
+    print("2. Mostrar todas las solicitudes")
     print("0. Salir")
     print("=" * 45)
 
@@ -26,6 +27,7 @@ def mostrar_resumen(solicitud: dict):
     print(f"Prioridad Asignada: {solicitud['prioridad']}")
     print("----------------------------------------")
 
+#Aplicar paso de parámetros para enviar datos a las funciones sin depender de variables globales innecesarias.
 # funciones de validacion
 def validar_texto_obligatorio(texto: str) -> bool:
     """Valida que una cadena no esté vacía y que contenga solo letras y espacios."""
@@ -37,6 +39,7 @@ def validar_codigo(codigo: str, min_longitud: int = 4) -> bool:
     codigo_limpio = codigo.strip()
     return len(codigo_limpio) >= min_longitud and codigo_limpio.isalnum()
 
+#Controlar el alcance de variables diferenciando datos del programa principal y datos internos de cada función.
 # Lista global de tipos permitidos para validación (Req. 3)
 TIPOS_PERMITIDOS = ["matricula", "pagos", "constancia", "plataforma", "otro"]
 
@@ -115,6 +118,14 @@ def main():
             solicitud = registrar_solicitud()
             solicitudes.append(solicitud)
             print(f"Registrado exitosamente. Total acumulado: {len(solicitudes)}")
+
+        elif opcion == "2":
+            if not solicitudes:
+                print("\n No hay solicitudes registradas aún.")
+            else:
+                print(f"\n================ ATENCIONES REGISTRADAS ({len(solicitudes)}) ================")
+                for idx, sol in enumerate(solicitudes, 1):
+                    print(f"[{idx}] Código: {sol['codigo']} | Alumno: {sol['nombre']} | Tipo: {sol['tipo']} | Prioridad: {sol['prioridad']}")
 
         elif opcion == "0":
             if len(solicitudes) < 3:
