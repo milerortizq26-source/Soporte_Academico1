@@ -23,6 +23,7 @@ def mostrar_resumen(solicitud: dict):
     print(f"Nombre Estudiante : {solicitud['nombre']}")
     print(f"Tipo de Consulta  : {solicitud['tipo'].capitalize()}")
     print(f"Descripción       : {solicitud['descripcion']}")
+    print(f"Prioridad Asignada: {solicitud['prioridad']}")
     print("----------------------------------------")
 
 # funciones de validacion
@@ -37,7 +38,15 @@ TIPOS_PERMITIDOS = ["matricula", "pagos", "constancia", "plataforma", "otro"]
 def validar_tipo_consulta(tipo: str) -> bool:
     """Función con retorno (Req. 3): Verifica si el tipo pertenece a la lista."""
     return tipo.strip().lower() in TIPOS_PERMITIDOS
-    
+
+def asignar_prioridad(tipo: str) -> str:
+    """Función con retorno (Req. 5): Asigna prioridad Alta o Baja según tipo de consulta."""
+    tipo_normalizado = tipo.strip().lower()
+    if tipo_normalizado in ["matricula", "pagos"]:
+        return "Alta"
+    return "Baja"
+
+
 
 
 def registrar_solicitud() -> dict:
@@ -63,12 +72,16 @@ def registrar_solicitud() -> dict:
 
     descripcion = input("Ingrese breve descripción del problema: ")
 
+    # Asignación de Prioridad
+    prioridad = asignar_prioridad(tipo)
+
     # Construcción de estructura local
     nueva_solicitud = {
         "codigo": codigo.strip(),
         "nombre": nombre.strip(),
         "tipo": tipo.strip().lower(),
-        "descripcion": descripcion.strip()
+        "descripcion": descripcion.strip(),
+        "prioridad": prioridad
     }
 
     mostrar_resumen(nueva_solicitud)
