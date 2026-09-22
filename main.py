@@ -31,6 +31,13 @@ def validar_codigo(codigo: str, min_longitud: int = 4) -> bool:
     codigo_limpio = codigo.strip()
     return len(codigo_limpio) >= min_longitud and codigo_limpio.isalnum()
 
+# Lista global de tipos permitidos para validación (Req. 3)
+TIPOS_PERMITIDOS = ["matricula", "pagos", "constancia", "plataforma", "otro"]
+
+def validar_tipo_consulta(tipo: str) -> bool:
+    """Función con retorno (Req. 3): Verifica si el tipo pertenece a la lista."""
+    return tipo.strip().lower() in TIPOS_PERMITIDOS
+    
 
 
 def registrar_solicitud() -> dict:
@@ -46,7 +53,13 @@ def registrar_solicitud() -> dict:
 
     nombre = input("Ingrese nombre completo del estudiante: ")
 
-    tipo = input("Ingrese tipo de consulta: ")
+    # Validación de Tipo de Consulta
+    print(f"Opciones válidas: {', '.join(TIPOS_PERMITIDOS)}")
+    while True:
+        tipo = input("Ingrese tipo de consulta: ")
+        if validar_tipo_consulta(tipo):
+            break
+        print("Error: Tipo de consulta no válido.")
 
     descripcion = input("Ingrese breve descripción del problema: ")
 
