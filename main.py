@@ -27,6 +27,11 @@ def mostrar_resumen(solicitud: dict):
     print("----------------------------------------")
 
 # funciones de validacion
+def validar_texto_obligatorio(texto: str) -> bool:
+    """Valida que una cadena no esté vacía y que contenga solo letras y espacios."""
+    texto_limpio = texto.strip()
+    return len(texto_limpio) > 0 and all(c.isalpha() or c.isspace() for c in texto_limpio)
+
 def validar_codigo(codigo: str, min_longitud: int = 4) -> bool:
     """Función con retorno (Req. 2): Valida código no vacío y con longitud mínima."""
     codigo_limpio = codigo.strip()
@@ -60,7 +65,12 @@ def registrar_solicitud() -> dict:
             break
         print("Error: El código debe ser alfanumérico y tener al menos 4 caracteres.")
 
-    nombre = input("Ingrese nombre completo del estudiante: ")
+    # Validación de Nombre
+    while True:
+        nombre = input("Ingrese nombre completo del estudiante: ")
+        if validar_texto_obligatorio(nombre):
+            break
+        print("Error: El nombre no puede estar vacío y solo debe ser texto.")
 
     # Validación de Tipo de Consulta
     print(f"Opciones válidas: {', '.join(TIPOS_PERMITIDOS)}")
@@ -70,7 +80,12 @@ def registrar_solicitud() -> dict:
             break
         print("Error: Tipo de consulta no válido.")
 
-    descripcion = input("Ingrese breve descripción del problema: ")
+    #Validacion de la descripcion
+    while True:
+        descripcion = input("Ingrese breve descripción del problema: ")
+        if validar_texto_obligatorio(descripcion):
+            break
+        print("Error: La descripción no puede estar vacía y solo debe ser texto.")
 
     # Asignación de Prioridad
     prioridad = asignar_prioridad(tipo)
