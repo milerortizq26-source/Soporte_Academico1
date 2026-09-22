@@ -2,7 +2,7 @@
 # SISTEMA DE ORIENTACIÓN Y REGISTRO DE ATENCIONES - SOPORTE ACADÉMICO
 # ==============================================================================
 
-# codigo de menu
+# funcion sin retorno del menu principal
 def mostrar_menu():
     """Función sin retorno (Req. 4): Muestra el menú de opciones principales."""
     print("\n" + "=" * 45)
